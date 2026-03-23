@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:HopDev.Maui.Controls.Controls;assembly=HopDev.Maui.Controls"
+             x:Class="HopDev.Maui.Controls.Sample.Pages.SmartScrollTestPage"
+             BackgroundColor="{StaticResource PageBackground}"
+             Title="SmartScroll Test">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,0,0,12">
+            <Label Text="SmartScrollPanel (Custom Control)" FontSize="20" FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}" />
+            <Label Text="Uses low-level mouse hook for wheel interception. Compare with native ScrollView tab."
+                   FontSize="13" TextColor="{StaticResource TextSecondary}" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="16">
+
+            <!-- Left: SmartScrollPanel -->
+            <Border Grid.Column="0" Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" StrokeShape="RoundRectangle 8">
+                <Grid RowDefinitions="Auto,*">
+                    <Label Grid.Row="0" Text="SmartScrollPanel" FontSize="14" FontAttributes="Bold"
+                           TextColor="{StaticResource ButtonPrimaryBackground}" Padding="12,8" />
+                    <controls:SmartScrollPanel Grid.Row="1" x:Name="SmartPanel"
+                                               ThumbColor="{StaticResource TextMuted}"
+                                               ScrollBarWidth="8"
+                                               Scrolled="OnSmartScrolled">
+                        <VerticalStackLayout Spacing="6" Padding="12" x:Name="SmartContent">
+                            <!-- Populated in code-behind -->
+                        </VerticalStackLayout>
+                    </controls:SmartScrollPanel>
+                </Grid>
+            </Border>
+
+            <!-- Right: Native ScrollView for comparison -->
+            <Border Grid.Column="1" Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" StrokeShape="RoundRectangle 8">
+                <Grid RowDefinitions="Auto,*">
+                    <Label Grid.Row="0" Text="Native ScrollView (comparison)" FontSize="14" FontAttributes="Bold"
+                           TextColor="{StaticResource WarningText}" Padding="12,8" />
+                    <ScrollView Grid.Row="1" x:Name="NativeScrollView" Scrolled="OnNativeScrolled">
+                        <VerticalStackLayout Spacing="6" Padding="12" x:Name="NativeContent">
+                            <!-- Populated in code-behind -->
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Grid>
+            </Border>
+
+        </Grid>
+
+        <Border Grid.Row="2" BackgroundColor="{StaticResource SurfaceColor}" Padding="12,8"
+                StrokeThickness="0" Margin="0,8,0,0" StrokeShape="RoundRectangle 4">
+            <HorizontalStackLayout Spacing="24">
+                <Label x:Name="LblSmartPos" FontSize="13" TextColor="{StaticResource ButtonPrimaryBackground}" />
+                <Label x:Name="LblNativePos" FontSize="13" TextColor="{StaticResource WarningText}" />
+            </HorizontalStackLayout>
+        </Border>
+
+    </Grid>
+
+</ContentPage>

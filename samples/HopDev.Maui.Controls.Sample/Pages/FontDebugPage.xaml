@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDev.Maui.Controls.Sample.Pages.FontDebugPage"
+             BackgroundColor="{DynamicResource PageBackground}">
+
+    <ScrollView Padding="24">
+        <VerticalStackLayout Spacing="16" MaximumWidthRequest="900" HorizontalOptions="Center">
+
+            <Label Text="Font Debug" FontSize="24" FontAttributes="Bold"
+                   TextColor="{DynamicResource TextPrimary}" />
+
+            <!-- Test every possible font family name reference -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Font Family Name Test — which one renders the search icon (F699)?"
+                           FontSize="14" FontAttributes="Bold" TextColor="{DynamicResource TextPrimary}" />
+
+                    <!-- Alias from AddFont -->
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xF699;" FontFamily="FluentFilled" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="FontFamily=&quot;FluentFilled&quot; (alias)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- Internal font name (what Patterns.md says to use) -->
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xF699;" FontFamily="FluentSystemIcons-Filled" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="FontFamily=&quot;FluentSystemIcons-Filled&quot; (internal name)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- Filename without extension -->
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xF699;" FontFamily="FluentSystemIcons-Filled.ttf" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="FontFamily=&quot;FluentSystemIcons-Filled.ttf&quot; (filename)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- Try with # prefix -->
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xF699;" FontFamily="#FluentSystemIcons-Filled" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="FontFamily=&quot;#FluentSystemIcons-Filled&quot; (# prefix)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- Fluent System Icons Filled (with spaces) -->
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xF699;" FontFamily="Fluent System Icons Filled" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="FontFamily=&quot;Fluent System Icons Filled&quot; (spaced)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- FluentRegular alias -->
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xF699;" FontFamily="FluentRegular" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="FontFamily=&quot;FluentRegular&quot; (regular alias)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- FluentSystemIcons-Regular internal -->
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xF699;" FontFamily="FluentSystemIcons-Regular" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="FontFamily=&quot;FluentSystemIcons-Regular&quot; (regular internal)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Test multiple codepoints with the winning font -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Codepoint Test — all using FluentFilled alias" FontSize="14"
+                           FontAttributes="Bold" TextColor="{DynamicResource TextPrimary}" />
+                    <VerticalStackLayout x:Name="CodepointTestAlias" Spacing="6" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Codepoint Test — all using FluentSystemIcons-Filled internal name"
+                           FontSize="14" FontAttributes="Bold" TextColor="{DynamicResource TextPrimary}" />
+                    <VerticalStackLayout x:Name="CodepointTestInternal" Spacing="6" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Segoe + other system fonts for comparison -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="System Font Comparison" FontSize="14" FontAttributes="Bold"
+                           TextColor="{DynamicResource TextPrimary}" />
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="Segoe MDL2 Assets — E721 (Search)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="Segoe MDL2 Assets — E77B (Contact)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xE8D7;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="Segoe MDL2 Assets — E8D7 (Key)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xE70F;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="Segoe MDL2 Assets — E70F (Edit/Pencil)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xE72E;" FontFamily="Segoe Fluent Icons" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="Segoe Fluent Icons — E72E (Lock)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="&#xE774;" FontFamily="Segoe Fluent Icons" FontSize="24"
+                               TextColor="White" WidthRequest="32" />
+                        <Label Text="Segoe Fluent Icons — E774 (Key)" FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Runtime debug output -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Runtime Debug" FontSize="14" FontAttributes="Bold"
+                           TextColor="{DynamicResource TextPrimary}" />
+                    <Label x:Name="LblDebug" FontSize="12"
+                           TextColor="{DynamicResource TextMuted}" LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

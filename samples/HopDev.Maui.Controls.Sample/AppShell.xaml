@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="clr-namespace:HopDev.Maui.Controls.Sample.Pages"
+       x:Class="HopDev.Maui.Controls.Sample.AppShell"
+       Shell.FlyoutBehavior="Disabled">
+
+    <TabBar>
+        <ShellContent Title="TitleBar" Route="titlebar"
+                      ContentTemplate="{DataTemplate pages:TitleBarTestPage}" />
+        <ShellContent Title="Diagnostics" Route="diagnostics"
+                      ContentTemplate="{DataTemplate pages:DiagnosticsPage}" />
+        <ShellContent Title="SmartScroll" Route="smartscroll"
+                      ContentTemplate="{DataTemplate pages:SmartScrollTestPage}" />
+        <ShellContent Title="ScrollView" Route="scrollview"
+                      ContentTemplate="{DataTemplate pages:ScrollViewTestPage}" />
+        <ShellContent Title="Drag Drop" Route="dragdrop"
+                      ContentTemplate="{DataTemplate pages:DragDropTestPage}" />
+    </TabBar>
+
+</Shell>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDev.Maui.Controls.Sample.Pages.DiagnosticsPage"
+             BackgroundColor="{StaticResource PageBackground}"
+             Title="Diagnostics">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="16">
+
+            <Label Text="🖥️ Platform Services Diagnostics" FontSize="24" FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}" />
+            <Label Text="Exercises IWindowScaleService, IWindowChromeService, and native interop. Drag between monitors to see DPI changes."
+                   FontSize="14" TextColor="{StaticResource TextSecondary}" />
+
+            <!-- IWindowScaleService Card -->
+            <Border Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" Padding="16"
+                    StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="IWindowScaleService" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource ButtonPrimaryBackground}" />
+                    <Label x:Name="LblEmpiricalScale" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                    <Label x:Name="LblWin32Dpi" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                    <Label x:Name="LblScaleMatch" FontSize="14" TextColor="{StaticResource SuccessText}" />
+                    <Label x:Name="LblWindowHandle" FontSize="14" TextColor="{StaticResource TextMuted}" FontFamily="monospace" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- IWindowChromeService Card -->
+            <Border Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" Padding="16"
+                    StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="IWindowChromeService" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource ButtonPrimaryBackground}" />
+                    <Label x:Name="LblChromeAttached" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                    <Label x:Name="LblExtended" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                    <Label x:Name="LblCaptionInsets" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Display Info Card -->
+            <Border Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" Padding="16"
+                    StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Display Information" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Label x:Name="LblScreenResolution" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                    <Label x:Name="LblWindowSize" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                    <Label x:Name="LblDensity" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                    <Label x:Name="LblIs4K" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Live Metrics Card -->
+            <Border Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" Padding="16"
+                    StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Live Window Metrics" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Label x:Name="LblLiveWidth" FontSize="14" TextColor="{StaticResource SuccessText}" />
+                    <Label x:Name="LblLiveHeight" FontSize="14" TextColor="{StaticResource SuccessText}" />
+                    <Label x:Name="LblLiveBreakpoint" FontSize="14" TextColor="{StaticResource WarningText}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Coordinate Conversion Test Card -->
+            <Border Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" Padding="16"
+                    StrokeShape="RoundRectangle 8"
+                    HeightRequest="200">
+                <Grid>
+                    <Label Text="Move pointer here — tests PhysicalPoint ↔ LogicalPoint conversion" FontSize="13"
+                           TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Start" />
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
+                        <Label x:Name="LblPointerLogical" FontSize="14"
+                               TextColor="{StaticResource ButtonPrimaryBackground}"
+                               HorizontalOptions="Center" />
+                        <Label x:Name="LblPointerRoundTrip" FontSize="12"
+                               TextColor="{StaticResource TextMuted}" FontFamily="monospace"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <Grid.GestureRecognizers>
+                        <PointerGestureRecognizer PointerMoved="OnPointerMoved" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </Border>
+
+            <!-- DPI Change Event Log -->
+            <Border Stroke="{StaticResource CardBorder}" StrokeThickness="1"
+                    BackgroundColor="{StaticResource CardBackground}" Padding="16"
+                    StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="DPI Change Event Log" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Label Text="Drag this window between monitors with different DPI to see events."
+                           FontSize="13" TextColor="{StaticResource TextMuted}" />
+                    <Label x:Name="LblDpiLog" FontSize="13" TextColor="{StaticResource TextSecondary}"
+                           FontFamily="monospace" Text="(no events yet)" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

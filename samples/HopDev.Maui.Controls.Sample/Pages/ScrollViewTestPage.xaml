@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDev.Maui.Controls.Sample.Pages.ScrollViewTestPage"
+             BackgroundColor="{StaticResource PageBackground}"
+             Title="ScrollView Test">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,0,0,12">
+            <Label Text="Native MAUI ScrollView" FontSize="20" FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}" />
+            <Label Text="Standard ScrollView — tests whether native mouse wheel scrolling works at your DPI/scale."
+                   FontSize="13" TextColor="{StaticResource TextSecondary}" />
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1" x:Name="TestScrollView" Scrolled="OnScrolled">
+            <VerticalStackLayout Spacing="8" x:Name="ScrollContent">
+                <!-- Populated in code-behind with 50 test items -->
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" BackgroundColor="{StaticResource SurfaceColor}" Padding="12,8"
+                StrokeThickness="0" Margin="0,8,0,0" StrokeShape="RoundRectangle 4">
+            <HorizontalStackLayout Spacing="20">
+                <Label x:Name="LblScrollPos" FontSize="13" TextColor="{StaticResource TextSecondary}" />
+                <Label x:Name="LblContentSize" FontSize="13" TextColor="{StaticResource TextSecondary}" />
+                <Label x:Name="LblViewportSize" FontSize="13" TextColor="{StaticResource TextSecondary}" />
+            </HorizontalStackLayout>
+        </Border>
+
+    </Grid>
+
+</ContentPage>

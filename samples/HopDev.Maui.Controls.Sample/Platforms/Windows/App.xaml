@@ -1,0 +1,16 @@
+<maui:MauiWinUIApplication
+    x:Class="HopDev.Maui.Controls.Sample.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:HopDev.Maui.Controls.Sample.WinUI">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Override caption background so the title bar area is transparent.
+                 Without this, WinUI draws a colored strip behind the caption buttons. -->
+            <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionForeground">Transparent</SolidColorBrush>
+        </ResourceDictionary>
+    </Application.Resources>
+</maui:MauiWinUIApplication>

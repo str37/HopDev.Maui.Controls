@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDev.Maui.Controls.Sample.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Dark theme matching Cloud app tokens -->
+            <Color x:Key="PageBackground">#0D1117</Color>
+            <Color x:Key="SurfaceColor">#161B22</Color>
+            <Color x:Key="CardBackground">#1C2333</Color>
+            <Color x:Key="CardBorder">#30394A</Color>
+            <Color x:Key="TextPrimary">#E2E8F0</Color>
+            <Color x:Key="TextSecondary">#94A3B8</Color>
+            <Color x:Key="TextMuted">#64748B</Color>
+            <Color x:Key="ButtonPrimaryBackground">#3D8BFD</Color>
+            <Color x:Key="ButtonPrimaryText">#FFFFFF</Color>
+            <Color x:Key="AccentHover">#2D3D5E</Color>
+            <Color x:Key="SuccessText">#6EE7B7</Color>
+            <Color x:Key="WarningText">#FCD34D</Color>
+            <Color x:Key="DangerText">#FCA5A5</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDev.Maui.Controls.Sample.Pages.DragDropTestPage"
+             BackgroundColor="{StaticResource PageBackground}"
+             Title="Drag Drop Test">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,0,0,12">
+            <Label Text="Drag &amp; Drop Reorder Test" FontSize="20" FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}" />
+            <Label Text="Tests DragGestureRecognizer + DropGestureRecognizer at current DPI/scale. Drag items to reorder."
+                   FontSize="13" TextColor="{StaticResource TextSecondary}" />
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout x:Name="DragContainer" Spacing="6" Padding="0,0,0,20">
+                <!-- Populated in code-behind -->
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" BackgroundColor="{StaticResource SurfaceColor}" Padding="12,8"
+                StrokeThickness="0" Margin="0,8,0,0" StrokeShape="RoundRectangle 4">
+            <Label x:Name="LblDragStatus" FontSize="13" TextColor="{StaticResource TextSecondary}"
+                   Text="Drag an item to begin reorder test" />
+        </Border>
+
+    </Grid>
+
+</ContentPage>

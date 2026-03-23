@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- ═══════ Microsoft Platform ═══════ -->
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.30" />
+    <PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.30" />
+
+    <!-- ═══════ Build Tooling ═══════ -->
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+  </ItemGroup>
+</Project>

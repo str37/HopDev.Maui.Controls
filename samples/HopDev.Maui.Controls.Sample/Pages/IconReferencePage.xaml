@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDev.Maui.Controls.Sample.Pages.IconReferencePage"
+             BackgroundColor="{DynamicResource PageBackground}">
+
+    <ScrollView Padding="24">
+        <VerticalStackLayout Spacing="20" MaximumWidthRequest="900" HorizontalOptions="Center">
+
+            <Label Text="Fluent System Icons Reference" FontSize="24" FontAttributes="Bold"
+                   TextColor="{DynamicResource TextPrimary}" />
+            <Label Text="These icons are from FluentSystemIcons-Filled.ttf (MIT, Microsoft). The font must be in Resources/Fonts/ and registered in MauiProgram.cs. Use FontFamily=&quot;FluentSystemIcons-Filled&quot; in XAML."
+                   FontSize="13" TextColor="{DynamicResource TextSecondary}" LineBreakMode="WordWrap" />
+
+            <!-- ═══ Sidebar / Navigation Icons ═══ -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Sidebar / Navigation" FontSize="18" FontAttributes="Bold"
+                           TextColor="{DynamicResource TextPrimary}" />
+                    <FlexLayout Wrap="Wrap" JustifyContent="Start" AlignItems="Start">
+                        <!-- Populated in code-behind -->
+                        <VerticalStackLayout x:Name="NavIcons" Spacing="8" />
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ═══ Toolbar / Action Icons ═══ -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Toolbar / Actions" FontSize="18" FontAttributes="Bold"
+                           TextColor="{DynamicResource TextPrimary}" />
+                    <VerticalStackLayout x:Name="ActionIcons" Spacing="8" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ═══ Status / Security Icons ═══ -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Status / Security" FontSize="18" FontAttributes="Bold"
+                           TextColor="{DynamicResource TextPrimary}" />
+                    <VerticalStackLayout x:Name="SecurityIcons" Spacing="8" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ═══ Alternative Candidates ═══ -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Alternative Candidates (explore these)" FontSize="18" FontAttributes="Bold"
+                           TextColor="{DynamicResource TextPrimary}" />
+                    <VerticalStackLayout x:Name="AltIcons" Spacing="8" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ═══ Size Comparison ═══ -->
+            <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{DynamicResource CardBackground}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Size Comparison (Notes icon at different sizes)" FontSize="18" FontAttributes="Bold"
+                           TextColor="{DynamicResource TextPrimary}" />
+                    <VerticalStackLayout x:Name="SizeComparison" Spacing="8" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

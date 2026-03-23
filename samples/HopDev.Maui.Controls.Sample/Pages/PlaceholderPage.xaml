@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDev.Maui.Controls.Sample.Pages.PlaceholderPage"
+             BackgroundColor="{DynamicResource PageBackground}">
+
+    <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center"
+                         HorizontalOptions="Center" MaximumWidthRequest="500">
+        <Label x:Name="TitleLabel" FontSize="28" FontAttributes="Bold"
+               TextColor="{DynamicResource TextPrimary}"
+               HorizontalOptions="Center" />
+        <Label x:Name="DescriptionLabel" FontSize="15"
+               TextColor="{DynamicResource TextSecondary}"
+               HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
+                BackgroundColor="{DynamicResource CardBackground}"
+                Padding="20" Margin="0,16,0,0">
+            <Label Text="This page will be built when the layout is migrated to the Cloud app. The sidebar, title bar, dropdowns, and key dock are the prototype being tested here."
+                   FontSize="13" TextColor="{DynamicResource TextMuted}"
+                   HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>
