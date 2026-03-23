@@ -34,7 +34,7 @@ jobs:
         run: dotnet build HopDev.Maui.Controls.sln -c Release --no-restore
 
       - name: Pack
-        run: dotnet pack src/HopDev.Maui.Controls/HopDev.Maui.Controls.csproj -c Release --no-build --output artifacts/packages
+        run: dotnet pack src/HopDev.Maui.Controls/HopDev.Maui.Controls.csproj -c Release --output artifacts/packages
 
       - name: Upload NuGet package
         uses: actions/upload-artifact@v4

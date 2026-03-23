@@ -37,11 +37,12 @@ jobs:
       - name: Restore
         run: dotnet restore HopDev.Maui.Controls.sln
 
-      - name: Build
-        run: dotnet build src/HopDev.Maui.Controls/HopDev.Maui.Controls.csproj -c Release --no-restore -p:Version=${{ steps.version.outputs.VERSION }}
+      - name: Build & Pack
+        run: dotnet pack src/HopDev.Maui.Controls/HopDev.Maui.Controls.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --output artifacts/packages
 
-      - name: Pack
-        run: dotnet pack src/HopDev.Maui.Controls/HopDev.Maui.Controls.csproj -c Release --no-build -p:Version=${{ steps.version.outputs.VERSION }} --output artifacts/packages
+      - name: List packages
+        shell: pwsh
+        run: Get-ChildItem -Recurse *.nupkg | ForEach-Object { Write-Host $_.FullName }
 
       - name: Push to NuGet.org
         run: dotnet nuget push artifacts/packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
