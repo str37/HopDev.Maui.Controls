@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-03-24
+
+### Fixed
+- **Caption button colors overridden on window focus change** — WinUI re-resolves `WindowCaptionForeground` from theme resources on every activation/deactivation, overriding `AppWindowTitleBar` API values. `WindowsChromeService` now caches all button colors and re-applies them on every `Window.Activated` event. This fixes apps that load the TitleBar control after the initial page (e.g., after a password prompt) where WinUI establishes its own theme state before `SetButtonColors` is first called.
+
 ## [1.1.0] - 2026-03-24
 
 ### Added

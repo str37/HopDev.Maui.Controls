@@ -33,6 +33,17 @@ public class WindowsChromeService : IWindowChromeService
     private View? _dragRegion;
     private bool _updateScheduled;
 
+    // ── Cached button colors — re-applied on every window activation ──
+    // WinUI re-resolves WindowCaptionForeground from theme resources on
+    // every focus change, which can override AppWindowTitleBar API values.
+    // Caching and re-applying on Activated is the only reliable defense.
+    private global::Windows.UI.Color? _cachedForeground;
+    private global::Windows.UI.Color? _cachedInactiveForeground;
+    private global::Windows.UI.Color? _cachedHoverForeground;
+    private global::Windows.UI.Color? _cachedPressedForeground;
+    private global::Windows.UI.Color? _cachedHoverBackground;
+    private global::Windows.UI.Color? _cachedPressedBackground;
+
     public bool IsContentExtendedIntoTitleBar { get; private set; }
     public Thickness CaptionButtonInsets { get; private set; } = Thickness.Zero;
     public object? NativeAppWindow => _appWindow;
@@ -100,6 +111,7 @@ public class WindowsChromeService : IWindowChromeService
         {
             var winFg = foreground.ToWindowsColor();
             titleBar.ButtonForegroundColor = winFg;
+            _cachedForeground = winFg;
 
             // Derive hover/pressed foreground: brighten for dark colors, darken for light.
             // This ensures the glyph remains visible against the hover/pressed background.
@@ -107,25 +119,63 @@ public class WindowsChromeService : IWindowChromeService
             var hoverFg = brightness < 0.6f
                 ? foreground.WithLuminosity(Math.Min(1.0f, foreground.GetLuminosity() + 0.25f))
                 : foreground.WithLuminosity(Math.Max(0.0f, foreground.GetLuminosity() - 0.15f));
-            titleBar.ButtonHoverForegroundColor = hoverFg.ToWindowsColor();
-            titleBar.ButtonPressedForegroundColor = hoverFg.ToWindowsColor();
+            var winHoverFg = hoverFg.ToWindowsColor();
+            titleBar.ButtonHoverForegroundColor = winHoverFg;
+            titleBar.ButtonPressedForegroundColor = winHoverFg;
+            _cachedHoverForeground = winHoverFg;
+            _cachedPressedForeground = winHoverFg;
         }
 
         if (inactiveForeground is not null)
         {
-            titleBar.ButtonInactiveForegroundColor = inactiveForeground.ToWindowsColor();
+            var winInactive = inactiveForeground.ToWindowsColor();
+            titleBar.ButtonInactiveForegroundColor = winInactive;
+            _cachedInactiveForeground = winInactive;
         }
         else if (foreground is not null)
         {
             // Derive inactive foreground: reduce opacity to ~60% for a muted appearance
             var inactive = foreground.WithAlpha(foreground.Alpha * 0.6f);
-            titleBar.ButtonInactiveForegroundColor = inactive.ToWindowsColor();
+            var winInactive = inactive.ToWindowsColor();
+            titleBar.ButtonInactiveForegroundColor = winInactive;
+            _cachedInactiveForeground = winInactive;
         }
 
         if (hoverBackground is not null)
-            titleBar.ButtonHoverBackgroundColor = hoverBackground.ToWindowsColor();
+        {
+            var winHoverBg = hoverBackground.ToWindowsColor();
+            titleBar.ButtonHoverBackgroundColor = winHoverBg;
+            _cachedHoverBackground = winHoverBg;
+        }
         if (pressedBackground is not null)
-            titleBar.ButtonPressedBackgroundColor = pressedBackground.ToWindowsColor();
+        {
+            var winPressedBg = pressedBackground.ToWindowsColor();
+            titleBar.ButtonPressedBackgroundColor = winPressedBg;
+            _cachedPressedBackground = winPressedBg;
+        }
+    }
+
+    /// <summary>
+    /// Re-push cached button colors to AppWindowTitleBar. Called on every
+    /// window activation because WinUI re-resolves WindowCaptionForeground
+    /// from theme resources on focus change, overriding API-set values.
+    /// </summary>
+    private void ReapplyCachedButtonColors()
+    {
+        if (_appWindow?.TitleBar is not { } titleBar) return;
+
+        if (_cachedForeground.HasValue)
+            titleBar.ButtonForegroundColor = _cachedForeground.Value;
+        if (_cachedInactiveForeground.HasValue)
+            titleBar.ButtonInactiveForegroundColor = _cachedInactiveForeground.Value;
+        if (_cachedHoverForeground.HasValue)
+            titleBar.ButtonHoverForegroundColor = _cachedHoverForeground.Value;
+        if (_cachedPressedForeground.HasValue)
+            titleBar.ButtonPressedForegroundColor = _cachedPressedForeground.Value;
+        if (_cachedHoverBackground.HasValue)
+            titleBar.ButtonHoverBackgroundColor = _cachedHoverBackground.Value;
+        if (_cachedPressedBackground.HasValue)
+            titleBar.ButtonPressedBackgroundColor = _cachedPressedBackground.Value;
     }
 
     public void Attach(Window mauiWindow, IWindowScaleService scaleService)
@@ -161,6 +211,13 @@ public class WindowsChromeService : IWindowChromeService
             ScheduleRegionUpdate();
         };
 
+        // CRITICAL: Re-apply caption button colors on every window activation.
+        // WinUI re-resolves WindowCaptionForeground from its theme resource
+        // dictionary on every focus change, which can override the values set
+        // via the AppWindowTitleBar API. Re-applying on Activated ensures
+        // the programmatic values always win the race.
+        _nativeWindow.Activated += OnWindowActivated;
+
         IsAttached = true;
         System.Diagnostics.Debug.WriteLine(
             $"[WindowsChromeService] Attached — caption insets: {CaptionButtonInsets}, " +
@@ -169,6 +226,10 @@ public class WindowsChromeService : IWindowChromeService
 
     public void Detach()
     {
+        // Unsubscribe activation handler
+        if (_nativeWindow is not null)
+            _nativeWindow.Activated -= OnWindowActivated;
+
         // Unsubscribe layout change handlers
         if (_dragRegion is not null)
             _dragRegion.SizeChanged -= OnRegionLayoutChanged;
@@ -189,6 +250,13 @@ public class WindowsChromeService : IWindowChromeService
         _nativeWindow = null;
         _appWindow = null;
         IsAttached = false;
+    }
+
+    private void OnWindowActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
+    {
+        // Re-apply on both activation AND deactivation — WinUI resolves
+        // different theme resource keys for each state and can override both.
+        ReapplyCachedButtonColors();
     }
 
     // ═══════════════════════════════════════════════════════════
