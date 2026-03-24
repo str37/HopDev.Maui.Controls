@@ -35,7 +35,7 @@ jobs:
         run: dotnet workload install maui
 
       - name: Restore
-        run: dotnet restore HopDev.Maui.Controls.sln
+        run: dotnet restore src/HopDev.Maui.Controls/HopDev.Maui.Controls.csproj
 
       - name: Build & Pack
         shell: pwsh
