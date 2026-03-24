@@ -13,16 +13,17 @@
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
               AbsoluteLayout.LayoutFlags="All"
               RowDefinitions="Auto,*"
-              ColumnDefinitions="Auto,*,Auto"
+              ColumnDefinitions="Auto,*"
               BackgroundColor="{DynamicResource PageBackground}">
 
             <!-- ═══ ROW 0: TITLE BAR (spans all columns) ═══
                  58px matches the visual weight of sidebar items. -->
             <hd:TitleBar x:Name="AppTitleBar"
-                         Grid.Row="0" Grid.ColumnSpan="3"
+                         Grid.Row="0" Grid.ColumnSpan="2"
                          HeightRequest="58"
                          TitleBarBackground="{DynamicResource SurfaceColor}"
                          ButtonForegroundColor="{DynamicResource TextSecondary}"
+                         ButtonInactiveForegroundColor="{DynamicResource TextMuted}"
                          ButtonHoverColor="{DynamicResource AccentHover}"
                          AttachedToWindow="OnTitleBarAttached">
 
@@ -130,37 +131,6 @@
             <!-- ═══ ROW 1, COL 1: CONTENT ═══ -->
             <ContentView x:Name="PageHost" Grid.Row="1" Grid.Column="1" />
 
-            <!-- ═══ ROW 1, COL 2: RIGHT KEY PANEL ═══ -->
-            <Border Grid.Row="1" Grid.Column="2"
-                    BackgroundColor="{DynamicResource SurfaceColor}"
-                    StrokeThickness="0" Padding="0">
-                <Grid RowDefinitions="Auto,*,Auto" Padding="12,12">
-                    <VerticalStackLayout Spacing="6">
-                        <HorizontalStackLayout Spacing="6">
-                            <Label Text="&#xE8D7;" FontFamily="Segoe MDL2 Assets"
-                                   FontSize="18" TextColor="{DynamicResource TextSecondary}"
-                                   VerticalOptions="Center" />
-                            <Label Text="Keys" FontSize="16" FontAttributes="Bold"
-                                   TextColor="{DynamicResource TextPrimary}"
-                                   VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                        <Label Text="Key Management →" FontSize="13"
-                               TextColor="{DynamicResource ButtonPrimaryBackground}"
-                               TextDecorations="Underline">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnKeyManagementTapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <BoxView HeightRequest="1" Color="{DynamicResource CardBorder}"
-                                 Margin="0,4" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout x:Name="KeyPanelCards" Grid.Row="1"
-                                         Spacing="8" Padding="0,4" />
-                    <Label Grid.Row="2" Text="" />
-                </Grid>
-            </Border>
-            <BoxView Grid.Row="1" Grid.Column="2" WidthRequest="1"
-                     HorizontalOptions="Start" Color="{DynamicResource CardBorder}" />
         </Grid>
 
         <!-- ═══ RESIZE GRIP ═══ -->

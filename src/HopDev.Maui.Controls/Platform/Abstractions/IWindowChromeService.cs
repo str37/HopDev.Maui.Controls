@@ -54,8 +54,11 @@ public interface IWindowChromeService
 
     /// <summary>
     /// Set caption button colors. Pass null for any parameter to use platform defaults.
+    /// On Windows, sets all AppWindowTitleBar button color properties including
+    /// foreground, inactive foreground, hover/pressed backgrounds, and derived
+    /// hover/pressed foreground colors.
     /// </summary>
-    void SetButtonColors(Color? foreground, Color? hoverBackground, Color? pressedBackground);
+    void SetButtonColors(Color? foreground, Color? hoverBackground, Color? pressedBackground, Color? inactiveForeground = null);
 
     /// <summary>
     /// The native AppWindow (Windows) or equivalent. Typed as object to avoid

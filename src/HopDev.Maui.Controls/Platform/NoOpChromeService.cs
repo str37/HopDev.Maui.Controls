@@ -22,7 +22,7 @@ public class NoOpChromeService : IWindowChromeService
     public void SetDragRegion(View view) { }
     public void RegisterInteractiveRegion(View view) { }
     public void UnregisterInteractiveRegion(View view) { }
-    public void SetButtonColors(Color? foreground, Color? hoverBackground, Color? pressedBackground) { }
+    public void SetButtonColors(Color? foreground, Color? hoverBackground, Color? pressedBackground, Color? inactiveForeground = null) { }
 
     public void Attach(Window mauiWindow, IWindowScaleService scaleService) => IsAttached = true;
     public void Detach() => IsAttached = false;

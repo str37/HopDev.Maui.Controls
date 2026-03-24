@@ -92,12 +92,36 @@ public class WindowsChromeService : IWindowChromeService
         }
     }
 
-    public void SetButtonColors(Color? foreground, Color? hoverBackground, Color? pressedBackground)
+    public void SetButtonColors(Color? foreground, Color? hoverBackground, Color? pressedBackground, Color? inactiveForeground = null)
     {
         if (_appWindow?.TitleBar is not { } titleBar) return;
 
         if (foreground is not null)
-            titleBar.ButtonForegroundColor = foreground.ToWindowsColor();
+        {
+            var winFg = foreground.ToWindowsColor();
+            titleBar.ButtonForegroundColor = winFg;
+
+            // Derive hover/pressed foreground: brighten for dark colors, darken for light.
+            // This ensures the glyph remains visible against the hover/pressed background.
+            var brightness = (foreground.Red * 0.299f + foreground.Green * 0.587f + foreground.Blue * 0.114f);
+            var hoverFg = brightness < 0.6f
+                ? foreground.WithLuminosity(Math.Min(1.0f, foreground.GetLuminosity() + 0.25f))
+                : foreground.WithLuminosity(Math.Max(0.0f, foreground.GetLuminosity() - 0.15f));
+            titleBar.ButtonHoverForegroundColor = hoverFg.ToWindowsColor();
+            titleBar.ButtonPressedForegroundColor = hoverFg.ToWindowsColor();
+        }
+
+        if (inactiveForeground is not null)
+        {
+            titleBar.ButtonInactiveForegroundColor = inactiveForeground.ToWindowsColor();
+        }
+        else if (foreground is not null)
+        {
+            // Derive inactive foreground: reduce opacity to ~60% for a muted appearance
+            var inactive = foreground.WithAlpha(foreground.Alpha * 0.6f);
+            titleBar.ButtonInactiveForegroundColor = inactive.ToWindowsColor();
+        }
+
         if (hoverBackground is not null)
             titleBar.ButtonHoverBackgroundColor = hoverBackground.ToWindowsColor();
         if (pressedBackground is not null)

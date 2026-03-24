@@ -15,7 +15,7 @@
         <Border Stroke="{DynamicResource CardBorder}" StrokeShape="RoundRectangle 8"
                 BackgroundColor="{DynamicResource CardBackground}"
                 Padding="20" Margin="0,16,0,0">
-            <Label Text="This page will be built when the layout is migrated to the Cloud app. The sidebar, title bar, dropdowns, and key dock are the prototype being tested here."
+            <Label Text="This page will be built when the layout is migrated to the Cloud app. The sidebar, title bar, and dropdowns are the prototype being tested here."
                    FontSize="13" TextColor="{DynamicResource TextMuted}"
                    HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
         </Border>

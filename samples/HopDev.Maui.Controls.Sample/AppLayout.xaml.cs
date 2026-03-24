@@ -44,8 +44,6 @@ public partial class AppLayout : ContentPage
 
     private readonly (string Label, string Key, Func<ContentPage> Factory)[] _utilitiesMenu =
     [
-        ("Key Management", "keymgmt",    () => new PlaceholderPage("Key Management", "Drive quality classification, USB detection, key registration, and mount history.")),
-        ("Backup",         "backup",     () => new PlaceholderPage("Backup", "Database backup to Backup Keys with scheduling and history.")),
         ("Import/Export",  "importexport",() => new PlaceholderPage("Import/Export", "Import data from CSV, vCard, KeePass, and other formats.")),
     ];
 
@@ -63,7 +61,6 @@ public partial class AppLayout : ContentPage
     {
         InitializeComponent();
         BuildSidebar();
-        BuildKeyDock();
         WireMenuInteractions();
     }
 
@@ -443,82 +440,6 @@ public partial class AppLayout : ContentPage
     private void OnDropdownDismiss(object? sender, TappedEventArgs e)
     {
         DismissDropdown();
-    }
-
-    // ═══════════════════════════════════════════════════════════
-    //  Title Bar Direct Navigation
-    // ═══════════════════════════════════════════════════════════
-
-    private void OnKeyManagementTapped(object? sender, TappedEventArgs e) => NavigateTo("keymgmt");
-
-    // ═══════════════════════════════════════════════════════════
-    //  Key Dock (mock data for sample app)
-    // ═══════════════════════════════════════════════════════════
-
-    private void BuildKeyDock()
-    {
-        KeyPanelCards.Children.Clear();
-        KeyPanelCards.Children.Add(BuildKeyCard(
-            "Working #1", "Working · H:\\ · 28.6 GB free", "\uE8D7", true));
-        KeyPanelCards.Children.Add(BuildKeyCard(
-            "Backup-Office", "Backup · E:\\ · USB 3.0", "\uE8D7", false));
-    }
-
-    private static Border BuildKeyCard(string name, string details, string icon, bool isWorking)
-    {
-        var nameLabel = new Label
-        {
-            FontSize = 15,
-            FontAttributes = FontAttributes.Bold,
-            TextColor = isWorking
-                ? Color.FromArgb("#22C55E")
-                : Color.FromArgb("#E2E8F0")
-        };
-
-        var nameSpan = new FormattedString();
-        nameSpan.Spans.Add(new Span
-        {
-            Text = icon + " ",
-            FontFamily = "Segoe MDL2 Assets",
-            FontSize = 15
-        });
-        nameSpan.Spans.Add(new Span { Text = name });
-        nameLabel.FormattedText = nameSpan;
-
-        var detailLabel = new Label
-        {
-            Text = details,
-            FontSize = 13,
-            TextColor = Color.FromArgb("#64748B")
-        };
-
-        var statusLabel = new Label
-        {
-            Text = "● Mounted",
-            FontSize = 12,
-            TextColor = isWorking
-                ? Color.FromArgb("#22C55E")
-                : Color.FromArgb("#94A3B8")
-        };
-
-        var stack = new VerticalStackLayout
-        {
-            Spacing = 2,
-            Children = { nameLabel, detailLabel, statusLabel }
-        };
-
-        return new Border
-        {
-            Content = stack,
-            Padding = new Thickness(12, 10),
-            BackgroundColor = Color.FromArgb("#1C2333"),
-            Stroke = isWorking
-                ? Color.FromArgb("#22C55E")
-                : Color.FromArgb("#30394A"),
-            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 8 },
-            StrokeThickness = isWorking ? 1.5 : 1,
-            WidthRequest = 280
-        };
     }
 
     // ═══════════════════════════════════════════════════════════

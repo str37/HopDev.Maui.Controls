@@ -104,7 +104,9 @@ Handles all platform plumbing — `ExtendsContentIntoTitleBar`, drag regions, ca
 **Full three-zone layout:**
 
 ```xml
-<hd:TitleBar TitleBarBackground="{DynamicResource SurfaceBrush}" HeightRequest="48">
+<hd:TitleBar TitleBarBackground="{DynamicResource SurfaceBrush}" HeightRequest="48"
+             ButtonForegroundColor="{DynamicResource TextSecondary}"
+             ButtonInactiveForegroundColor="{DynamicResource TextMuted}">
 
     <hd:TitleBar.LeadingContent>
         <Image Source="appicon.png" HeightRequest="20" />
@@ -140,7 +142,8 @@ Handles all platform plumbing — `ExtendsContentIntoTitleBar`, drag regions, ca
 | `TitleColor` | `Color` | null | Color for fallback title |
 | `TitleBarBackground` | `Brush` | null | Background brush for the title bar |
 | `ButtonHoverColor` | `Color` | null | Caption button hover background (null = platform default) |
-| `ButtonForegroundColor` | `Color` | null | Caption button icon color |
+| `ButtonForegroundColor` | `Color` | null | Caption button icon color. When set, hover/pressed foreground and inactive foreground are auto-derived if not explicitly provided. |
+| `ButtonInactiveForegroundColor` | `Color` | null | Caption button icon color when the window is inactive (unfocused). If null, derived from `ButtonForegroundColor` at 60% opacity. |
 | `ButtonPressedColor` | `Color` | null | Caption button pressed background |
 | `AutoExtend` | `bool` | true | When true, automatically calls `ExtendContentIntoTitleBar` on attach. Set false to manage this yourself. |
 
@@ -173,6 +176,7 @@ A `MauiAppBuilder` extension that configures a fully borderless window where you
 
 - Sets `ExtendsContentIntoTitleBar = true` on both WinUI3 and AppWindow levels
 - Makes caption button backgrounds transparent
+- Overrides `WindowCaptionForeground` with a visible fallback — prevents a common bug where consuming apps set this to `Transparent`, causing min/max/close button glyphs to disappear when the window is focused (especially visible in dark mode)
 - Hides the system icon and menu
 - Sets `PreferredHeightOption = Tall` for the modern Windows 11 look
 - Pulls content up past MAUI's reserved 32px `AppTitleBarContainer` (uses the `-32` margin workaround for dotnet/maui#22894)
@@ -196,7 +200,8 @@ builder
 
 1. Set `Window.Title = ""` in `App.xaml.cs`
 2. Optionally set `WindowCaptionBackground = Transparent` in `Platforms/Windows/App.xaml` (the extension does this at runtime as a fallback)
-3. Include the `PerMonitorV2` DPI manifest (see PerMonitorV2 Manifest section below)
+3. **Do NOT set `WindowCaptionForeground` to `Transparent`** — this hides the min/max/close button glyphs when the window is focused. The library sets a visible fallback automatically, and `TitleBar.ButtonForegroundColor` controls the actual color via the `AppWindowTitleBar` API.
+4. Include the `PerMonitorV2` DPI manifest (see PerMonitorV2 Manifest section below)
 
 **Theme change API:**
 
@@ -272,7 +277,7 @@ chromeService.UnregisterInteractiveRegion(mySearchBar);
 Thickness insets = chromeService.CaptionButtonInsets;
 // insets.Right = total width of min/max/close buttons
 
-chromeService.SetButtonColors(foreground, hoverBg, pressedBg);
+chromeService.SetButtonColors(foreground, hoverBg, pressedBg, inactiveForeground);
 ```
 
 ### IPointerInterceptService
@@ -487,6 +492,9 @@ Add `hd:TitleBar.IsInteractive="True"` to any custom control. Standard types (Bu
 
 **Border is white in dark mode:**
 Call `builder.UseBorderlessWindow()` — it enables `DWMWA_USE_IMMERSIVE_DARK_MODE` and auto-syncs on theme changes. If you toggle themes manually, call `BorderlessWindowExtensions.UpdateBorderColor(isDark)`.
+
+**Min/max/close buttons invisible when the window is focused:**
+Your `Platforms/Windows/App.xaml` likely sets `WindowCaptionForeground` to `Transparent`. Remove that line — `UseBorderlessWindow()` sets a visible fallback automatically, and `TitleBar.ButtonForegroundColor` controls the color via `AppWindowTitleBar`. If the buttons are visible when unfocused but invisible when focused, this is almost certainly the cause.
 
 ---
 

@@ -14,8 +14,9 @@ namespace HopDev.Maui.Controls.Extensions;
 ///
 /// Requirements for consuming app:
 ///   1. Window.Title = "" in App.xaml.cs
-///   2. WindowCaptionBackground = Transparent in Platforms/Windows/App.xaml (belt-and-suspenders)
-///   3. PerMonitorV2 DPI manifest in Platforms/Windows/app.manifest
+///   2. Optionally set WindowCaptionBackground = Transparent in Platforms/Windows/App.xaml (belt-and-suspenders)
+///   3. Do NOT set WindowCaptionForeground to Transparent — the library handles this automatically
+///   4. PerMonitorV2 DPI manifest in Platforms/Windows/app.manifest
 ///
 /// Usage:
 ///   builder.UseHopDevControls().UseBorderlessWindow();
@@ -71,6 +72,18 @@ public static class BorderlessWindowExtensions
                         new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
                     root.Resources["WindowCaptionBackgroundDisabled"] =
                         new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
+
+                    // CRITICAL: Override WindowCaptionForeground with a visible fallback.
+                    // If a consuming app sets this to Transparent (a common mistake), WinUI
+                    // re-applies it on every focus change and hides the min/max/close glyphs.
+                    // A medium gray works for both light and dark themes as a safe fallback;
+                    // TitleBar.SetButtonColors() overrides this with the actual theme color.
+                    root.Resources["WindowCaptionForeground"] =
+                        new Microsoft.UI.Xaml.Media.SolidColorBrush(
+                            Microsoft.UI.ColorHelper.FromArgb(0xFF, 0x88, 0x88, 0x88));
+                    root.Resources["WindowCaptionForegroundDisabled"] =
+                        new Microsoft.UI.Xaml.Media.SolidColorBrush(
+                            Microsoft.UI.ColorHelper.FromArgb(0xFF, 0xAA, 0xAA, 0xAA));
                 }
 
                 // Enable DWM dark mode rendering for the window border.

@@ -85,6 +85,10 @@ public class TitleBar : ContentView
         nameof(ButtonPressedColor), typeof(Color), typeof(TitleBar), null,
         propertyChanged: OnButtonColorsChanged);
 
+    public static readonly BindableProperty ButtonInactiveForegroundColorProperty = BindableProperty.Create(
+        nameof(ButtonInactiveForegroundColor), typeof(Color), typeof(TitleBar), null,
+        propertyChanged: OnButtonColorsChanged);
+
     // ═══════════════════════════════════════════════════════════
     // Bindable Properties — Behavior
     // ═══════════════════════════════════════════════════════════
@@ -141,6 +145,7 @@ public class TitleBar : ContentView
     public Color? ButtonHoverColor { get => (Color?)GetValue(ButtonHoverColorProperty); set => SetValue(ButtonHoverColorProperty, value); }
     public Color? ButtonForegroundColor { get => (Color?)GetValue(ButtonForegroundColorProperty); set => SetValue(ButtonForegroundColorProperty, value); }
     public Color? ButtonPressedColor { get => (Color?)GetValue(ButtonPressedColorProperty); set => SetValue(ButtonPressedColorProperty, value); }
+    public Color? ButtonInactiveForegroundColor { get => (Color?)GetValue(ButtonInactiveForegroundColorProperty); set => SetValue(ButtonInactiveForegroundColorProperty, value); }
 
     /// <summary>When true (default), the control automatically calls ExtendContentIntoTitleBar
     /// when it attaches to the platform. Set false to manage this yourself.</summary>
@@ -382,7 +387,8 @@ public class TitleBar : ContentView
         _chromeService?.SetButtonColors(
             ButtonForegroundColor,
             ButtonHoverColor,
-            ButtonPressedColor);
+            ButtonPressedColor,
+            ButtonInactiveForegroundColor);
     }
 
     // ═══════════════════════════════════════════════════════════

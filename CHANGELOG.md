@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-24
+
+### Added
+- **TitleBar.ButtonInactiveForegroundColor** — new bindable property to control caption button glyph color when the window is inactive (unfocused). If not set, auto-derived from `ButtonForegroundColor` at 60% opacity.
+
+### Fixed
+- **Caption button glyphs invisible in dark mode when window is focused** — `SetButtonColors` now sets all six `AppWindowTitleBar` color properties (active/inactive/hover/pressed foreground + hover/pressed background). Previously only three were set, leaving `ButtonInactiveForegroundColor`, `ButtonHoverForegroundColor`, and `ButtonPressedForegroundColor` at WinUI defaults that could conflict with theme resources.
+- **`WindowCaptionForeground: Transparent` causing invisible min/max/close buttons** — `UseBorderlessWindow()` now overrides `WindowCaptionForeground` with a visible fallback color at runtime. This prevents a common integration bug where consuming apps set this WinUI theme resource to `Transparent`, which WinUI then re-applies on every focus change, hiding the caption button glyphs.
+
+### Changed
+- `IWindowChromeService.SetButtonColors()` now accepts an optional fourth parameter `inactiveForeground`. Existing callers are unaffected (parameter has a default value of `null`).
+
+### Removed
+- **Sample app:** Removed the right-side key panel and all key-related references from the sample application.
+
 ## [1.0.0] - 2026-03-23
 
 ### Added
